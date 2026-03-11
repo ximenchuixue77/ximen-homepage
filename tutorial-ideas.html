@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第三课：我的想法 | OpenClaw 教程</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background: #f5f7fa;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .header h1 span {
+            margin-left: 15px;
+            font-size: 0.5em;
+            opacity: 0.8;
+        }
+        
+        .layout {
+            display: flex;
+            margin-top: 90px;
+            min-height: calc(100vh - 90px);
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            position: fixed;
+            left: 0;
+            top: 90px;
+            bottom: 0;
+            overflow-y: auto;
+            padding: 30px 0;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-title {
+            padding: 0 25px;
+            font-size: 0.85em;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin: 0;
+        }
+        
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 25px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-menu a:hover {
+            background: #f5f7fa;
+            color: #667eea;
+            border-left-color: #667eea;
+        }
+        
+        .sidebar-menu a.active {
+            background: linear-gradient(90deg, rgba(102,126,234,0.1) 0%, transparent 100%);
+            color: #667eea;
+            border-left-color: #667eea;
+            font-weight: bold;
+        }
+        
+        .sidebar-menu a .icon {
+            margin-right: 10px;
+        }
+        
+        .content {
+            margin-left: 280px;
+            padding: 40px 60px;
+            flex: 1;
+            max-width: 1200px;
+        }
+        
+        .content-header {
+            margin-bottom: 40px;
+        }
+        
+        .content-header h2 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .content-header p {
+            font-size: 1.2em;
+            color: #666;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+        
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card h3::before {
+            content: '💡';
+            margin-right: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            background: white;
+            margin-left: 280px;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .footer {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚔️ OpenClaw 完整教程 <span>by 西门吹雪</span></h1>
+    </div>
+    
+    <div class="layout">
+        <nav class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">入门指南</div>
+                <ul class="sidebar-menu">
+                    <li><a href="tutorial.html"><span class="icon">📚</span>第一课：安装步骤</a></li>
+                    <li><a href="tutorial-problems.html"><span class="icon">🐛</span>第二课：常见问题</a></li>
+                    <li><a href="tutorial-ideas.html" class="active"><span class="icon">💡</span>第三课：我的想法</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">进阶内容</div>
+                <ul class="sidebar-menu">
+                    <li><a href="#"><span class="icon">🔧</span>技能开发（敬请期待）</a></li>
+                    <li><a href="#"><span class="icon">🤖</span>自动化实战（敬请期待）</a></li>
+                    <li><a href="#"><span class="icon">🔐</span>安全加固（敬请期待）</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">其他</div>
+                <ul class="sidebar-menu">
+                    <li><a href="index.html"><span class="icon">🏠</span>返回首页</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <div class="content-header">
+                <h2>第三课：我的想法与实践</h2>
+                <p>分享使用 OpenClaw 的心得和创意玩法</p>
+            </div>
+            
+            <div class="card">
+                <h3>关于 OpenClaw 的思考</h3>
+                <p>OpenClaw 不仅仅是一个 AI 助手，它是一个可以无限扩展的平台。通过技能系统，我们可以让 AI 做任何事情。</p>
+                <p style="margin-top: 15px;">这里是我在使用过程中的一些想法和实践经验...</p>
+            </div>
+            
+            <div class="card">
+                <h3>实用技巧</h3>
+                <ul>
+                    <li><strong>记忆管理：</strong>使用 memory-master 技能，让 AI 记住所有重要对话</li>
+                    <li><strong>自动化：</strong>结合 cron 任务，实现定时提醒和自动化工作流</li>
+                    <li><strong>安全第一：</strong>定期运行安全扫描，保护你的数据</li>
+                    <li><strong>备份习惯：</strong>每天自动备份工作空间到 GitHub</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>创意玩法</h3>
+                <ul>
+                    <li><strong>PDF 转 Word：</strong>批量处理文档，提高工作效率</li>
+                    <li><strong>浏览器自动化：</strong>自动填写表单，解放双手</li>
+                    <li><strong>新闻抓取：</strong>每天自动获取最新资讯</li>
+                    <li><strong>个人网站：</strong>用 GitHub Pages 搭建免费网站</li>
+                </ul>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%); border-left: 5px solid #ffc107; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong>💭 持续更新中...</strong><br>
+                这一课会随着我的使用经验不断更新，敬请期待更多内容！
+            </div>
+        </main>
+    </div>
+    
+    <div class="footer">
+        <p>© 2026 西门吹雪 | 由 OpenClaw 自动生成</p>
+    </div>
+</body>
+</html>
