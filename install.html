@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenClaw 安装教程 | 西门吹雪</title>
+    <title>OpenClaw 完整安装指南 | 西门吹雪</title>
     <style>
         * {
             margin: 0;
@@ -13,60 +13,130 @@
         
         body {
             font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
-            background: #f5f7fa;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             line-height: 1.8;
             color: #333;
+            padding-bottom: 60px;
         }
         
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
             color: white;
-            padding: 60px 20px;
+            padding: 80px 20px;
             text-align: center;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
         }
         
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
         
         .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+            font-size: 1.3em;
+            opacity: 0.95;
         }
         
         .container {
-            max-width: 900px;
-            margin: -40px auto 60px;
+            max-width: 1000px;
+            margin: -60px auto 0;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+        }
+        
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e0e0e0;
+            z-index: 0;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .step-title {
+            font-size: 0.9em;
+            color: #666;
         }
         
         h2 {
             color: #667eea;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #667eea;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            font-size: 2em;
         }
         
         h3 {
             color: #764ba2;
-            margin-top: 30px;
-            margin-bottom: 15px;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+        }
+        
+        h3::before {
+            content: '▶';
+            margin-right: 10px;
+            color: #667eea;
         }
         
         .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 20px;
-            border-radius: 8px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 12px;
             overflow-x: auto;
-            margin: 20px 0;
-            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 25px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
             font-size: 0.95em;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        .code-block::before {
+            content: '💻 Terminal';
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            font-size: 0.8em;
+            color: #888;
+            font-family: 'Microsoft YaHei', sans-serif;
         }
         
         .code-block code {
@@ -74,257 +144,539 @@
             white-space: pre;
         }
         
+        .code-comment {
+            color: #6a9955;
+        }
+        
         .note {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 4px;
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+            border-left: 5px solid #ffc107;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .note strong {
+            color: #856404;
         }
         
         .warning {
-            background: #f8d7da;
-            border-left: 4px solid #dc3545;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 4px;
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border-left: 5px solid #dc3545;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .warning strong {
+            color: #721c24;
         }
         
         .success {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 4px;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-left: 5px solid #28a745;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .success strong {
+            color: #155724;
+        }
+        
+        .info {
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            border-left: 5px solid #17a2b8;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         ul, ol {
             margin-left: 30px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .command-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .command-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .command-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .command-table tr:hover {
+            background: #f5f7fa;
+        }
+        
+        .command-table code {
+            background: #f5f7fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            color: #667eea;
         }
         
         .footer {
             text-align: center;
             padding: 40px 20px;
-            color: #999;
+            color: white;
+            margin-top: 60px;
+        }
+        
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            opacity: 0.9;
+        }
+        
+        .footer a:hover {
+            opacity: 1;
+            text-decoration: underline;
         }
         
         a {
             color: #667eea;
             text-decoration: none;
+            font-weight: 500;
         }
         
         a:hover {
             text-decoration: underline;
         }
+        
+        .skill-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .skill-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>⚔️ OpenClaw 安装教程</h1>
-        <p>从零开始，打造你的 AI 助手</p>
+        <h1>⚔️ OpenClaw 完整安装指南</h1>
+        <p>从零开始，打造你的专属 AI 助手</p>
     </div>
     
     <div class="container">
+        <div class="progress-bar">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-title">环境准备</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-title">安装 OpenClaw</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-title">配置设置</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-title">安装技能</div>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-title">完成部署</div>
+            </div>
+        </div>
+        
         <h2>📋 系统要求</h2>
         <ul>
             <li><strong>操作系统：</strong>Linux / macOS / Windows (WSL2)</li>
             <li><strong>Node.js：</strong>≥ 18.0.0</li>
-            <li><strong>内存：</strong>≥ 2GB</li>
+            <li><strong>内存：</strong>≥ 2GB RAM</li>
             <li><strong>硬盘：</strong>≥ 10GB 可用空间</li>
+            <li><strong>网络：</strong>稳定的互联网连接</li>
         </ul>
         
-        <h2>🚀 快速安装</h2>
+        <h2>🚀 步骤 1：环境准备</h2>
         
-        <h3>1. 安装 Node.js</h3>
-        <div class="code-block"><code># Ubuntu/Debian
+        <h3>安装 Node.js</h3>
+        <div class="code-block"><code><span class="code-comment"># Ubuntu/Debian</span>
 sudo apt update
 sudo apt install nodejs npm -y
 
-# macOS (使用 Homebrew)
+<span class="code-comment"># macOS (使用 Homebrew)</span>
 brew install node
 
-# 验证安装
+<span class="code-comment"># 验证安装</span>
 node --version
 npm --version</code></div>
         
-        <h3>2. 安装 OpenClaw</h3>
-        <div class="code-block"><code># 全局安装
+        <div class="note">
+            <strong>💡 提示：</strong> 如果 Node.js 版本低于 18，建议使用 <a href="https://github.com/nvm-sh/nvm" target="_blank">nvm</a> 安装最新版本。
+        </div>
+        
+        <h2>🔧 步骤 2：安装 OpenClaw</h2>
+        
+        <h3>全局安装</h3>
+        <div class="code-block"><code><span class="code-comment"># 使用 npm 全局安装</span>
 npm install -g openclaw
 
-# 验证安装
+<span class="code-comment"># 验证安装</span>
 openclaw --version</code></div>
         
         <div class="success">
-            <strong>✅ 安装成功！</strong> 如果看到版本号，说明 OpenClaw 已经安装完成。
+            <strong>✅ 安装成功！</strong> 如果看到版本号（如 2026.3.8），说明 OpenClaw 已经安装完成。
         </div>
         
-        <h2>⚙️ 初始化配置</h2>
+        <h2>⚙️ 步骤 3：初始化配置</h2>
         
-        <h3>1. 创建工作空间</h3>
-        <div class="code-block"><code># 初始化 OpenClaw
+        <h3>创建工作空间</h3>
+        <div class="code-block"><code><span class="code-comment"># 初始化 OpenClaw</span>
 openclaw init
 
-# 这会创建以下目录结构：
-# ~/.openclaw/
-# ├── workspace/      # 工作空间
-# ├── config.json     # 配置文件
-# └── gateway.json    # 网关配置</code></div>
+<span class="code-comment"># 这会创建以下目录结构：</span>
+<span class="code-comment"># ~/.openclaw/</span>
+<span class="code-comment"># ├── workspace/      # 工作空间（存放记忆、技能等）</span>
+<span class="code-comment"># ├── config.json     # 主配置文件</span>
+<span class="code-comment"># └── gateway.json    # 网关配置</span></code></div>
         
-        <h3>2. 配置 API Key</h3>
-        <div class="code-block"><code># 编辑配置文件
+        <h3>配置 API Key</h3>
+        <div class="code-block"><code><span class="code-comment"># 编辑配置文件</span>
 nano ~/.openclaw/config.json
 
-# 添加你的 API Key：
+<span class="code-comment"># 添加你的 API Key：</span>
 {
   "models": {
     "default": "claude-sonnet-4",
-    "apiKey": "your-api-key-here"
+    "apiKey": "sk-ant-your-api-key-here"
   }
 }</code></div>
         
-        <div class="note">
-            <strong>💡 提示：</strong> 你可以使用 Anthropic、OpenAI、或其他兼容的 API。
+        <div class="info">
+            <strong>ℹ️ API Key 获取：</strong>
+            <ul style="margin-top: 10px;">
+                <li><strong>Anthropic Claude：</strong> <a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a></li>
+                <li><strong>OpenAI：</strong> <a href="https://platform.openai.com/" target="_blank">platform.openai.com</a></li>
+            </ul>
         </div>
         
-        <h3>3. 启动 Gateway</h3>
-        <div class="code-block"><code># 启动 OpenClaw Gateway
+        <h3>启动 Gateway</h3>
+        <div class="code-block"><code><span class="code-comment"># 启动 OpenClaw Gateway（后台服务）</span>
 openclaw gateway start
 
-# 查看状态
+<span class="code-comment"># 查看运行状态</span>
 openclaw gateway status
 
-# 查看日志
-openclaw gateway logs</code></div>
+<span class="code-comment"># 查看实时日志</span>
+openclaw gateway logs -f</code></div>
         
-        <h2>🔧 安装技能 (Skills)</h2>
+        <h2>🎯 步骤 4：安装技能 (Skills)</h2>
         
-        <h3>1. 安装 ClawHub CLI</h3>
-        <div class="code-block"><code>npm install -g clawhub</code></div>
-        
-        <h3>2. 搜索并安装技能</h3>
-        <div class="code-block"><code># 搜索技能
-clawhub search memory
+        <h3>安装 ClawHub CLI</h3>
+        <div class="code-block"><code><span class="code-comment"># 安装技能管理工具</span>
+npm install -g clawhub
 
-# 安装技能
-clawhub install memory-master
-
-# 查看已安装技能
-clawhub list</code></div>
+<span class="code-comment"># 验证安装</span>
+clawhub --version</code></div>
         
-        <h3>3. 推荐技能</h3>
-        <ul>
-            <li><strong>memory-master：</strong>精准记忆系统</li>
-            <li><strong>openclaw-security-scanner：</strong>安全扫描工具</li>
-            <li><strong>weather：</strong>天气查询</li>
-            <li><strong>gog：</strong>Google Workspace 集成</li>
-        </ul>
+        <h3>推荐技能安装</h3>
         
-        <h2>🔒 安全配置</h2>
-        
-        <div class="warning">
-            <strong>⚠️ 重要：</strong> 安装完成后，务必运行安全扫描！
+        <div class="skill-card">
+            <h4>🧠 memory-master - 精准记忆系统</h4>
+            <p>结构化记忆管理，自动索引，启发式召回</p>
+            <div class="code-block"><code>clawhub install memory-master</code></div>
         </div>
         
-        <div class="code-block"><code># 安装安全扫描工具
-clawhub install openclaw-security-scanner
-
-# 运行扫描
-bash ~/.openclaw/workspace/skills/openclaw-security-scanner/oc-security-scan.sh
-
-# 自动修复问题
-bash ~/.openclaw/workspace/skills/openclaw-security-scanner/oc-security-scan.sh --fix</code></div>
+        <div class="skill-card">
+            <h4>🔒 openclaw-security-scanner - 安全扫描</h4>
+            <p>检查配置安全性，自动修复常见问题</p>
+            <div class="code-block"><code>clawhub install openclaw-security-scanner</code></div>
+        </div>
         
-        <h2>📱 连接 Telegram</h2>
+        <div class="skill-card">
+            <h4>🌤️ weather - 天气查询</h4>
+            <p>获取实时天气和预报信息</p>
+            <div class="code-block"><code>clawhub install weather</code></div>
+        </div>
         
-        <h3>1. 创建 Telegram Bot</h3>
+        <div class="warning">
+            <strong>⚠️ 安全提醒：</strong> 安装技能后，务必运行安全扫描！
+            <div class="code-block" style="margin-top: 15px;"><code>bash ~/.openclaw/workspace/skills/openclaw-security-scanner/oc-security-scan.sh --fix</code></div>
+        </div>
+        
+        <h2>📱 步骤 5：连接 Telegram（可选）</h2>
+        
+        <h3>创建 Telegram Bot</h3>
         <ol>
             <li>在 Telegram 中搜索 <code>@BotFather</code></li>
             <li>发送 <code>/newbot</code> 创建新 bot</li>
             <li>按提示设置名称和用户名</li>
-            <li>保存 Bot Token</li>
+            <li>保存 Bot Token（格式：<code>123456:ABC-DEF...</code>）</li>
+            <li>获取你的 User ID（可以用 <code>@userinfobot</code>）</li>
         </ol>
         
-        <h3>2. 配置 OpenClaw</h3>
-        <div class="code-block"><code># 编辑配置
+        <h3>配置 OpenClaw</h3>
+        <div class="code-block"><code><span class="code-comment"># 编辑配置文件</span>
 nano ~/.openclaw/config.json
 
-# 添加 Telegram 配置：
+<span class="code-comment"># 添加 Telegram 配置：</span>
 {
   "telegram": {
-    "token": "your-bot-token",
+    "token": "123456:ABC-DEF-your-bot-token",
     "allowedUsers": [123456789]
   }
 }</code></div>
         
-        <h3>3. 重启 Gateway</h3>
+        <h3>重启 Gateway</h3>
         <div class="code-block"><code>openclaw gateway restart</code></div>
+        
+        <div class="success">
+            <strong>🎉 完成！</strong> 现在可以在 Telegram 中和你的 AI 助手对话了！
+        </div>
+        
+        <h2>📚 OpenClaw 常用命令</h2>
+        
+        <h3>Gateway 管理</h3>
+        <table class="command-table">
+            <thead>
+                <tr>
+                    <th>命令</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>openclaw gateway start</code></td>
+                    <td>启动 Gateway 服务</td>
+                </tr>
+                <tr>
+                    <td><code>openclaw gateway stop</code></td>
+                    <td>停止 Gateway 服务</td>
+                </tr>
+                <tr>
+                    <td><code>openclaw gateway restart</code></td>
+                    <td>重启 Gateway 服务</td>
+                </tr>
+                <tr>
+                    <td><code>openclaw gateway status</code></td>
+                    <td>查看运行状态</td>
+                </tr>
+                <tr>
+                    <td><code>openclaw gateway logs</code></td>
+                    <td>查看日志（加 <code>-f</code> 实时查看）</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>技能管理</h3>
+        <table class="command-table">
+            <thead>
+                <tr>
+                    <th>命令</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>clawhub search &lt;关键词&gt;</code></td>
+                    <td>搜索技能</td>
+                </tr>
+                <tr>
+                    <td><code>clawhub install &lt;技能名&gt;</code></td>
+                    <td>安装技能</td>
+                </tr>
+                <tr>
+                    <td><code>clawhub list</code></td>
+                    <td>查看已安装技能</td>
+                </tr>
+                <tr>
+                    <td><code>clawhub update &lt;技能名&gt;</code></td>
+                    <td>更新指定技能</td>
+                </tr>
+                <tr>
+                    <td><code>clawhub update --all</code></td>
+                    <td>更新所有技能</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>系统维护</h3>
+        <table class="command-table">
+            <thead>
+                <tr>
+                    <th>命令</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>openclaw status</code></td>
+                    <td>查看系统状态</td>
+                </tr>
+                <tr>
+                    <td><code>openclaw --version</code></td>
+                    <td>查看版本号</td>
+                </tr>
+                <tr>
+                    <td><code>npm update -g openclaw</code></td>
+                    <td>更新 OpenClaw 到最新版</td>
+                </tr>
+                <tr>
+                    <td><code>openclaw help</code></td>
+                    <td>查看帮助信息</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>工作空间管理</h3>
+        <table class="command-table">
+            <thead>
+                <tr>
+                    <th>路径</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>~/.openclaw/workspace/</code></td>
+                    <td>工作空间根目录</td>
+                </tr>
+                <tr>
+                    <td><code>~/.openclaw/workspace/memory/</code></td>
+                    <td>记忆存储目录</td>
+                </tr>
+                <tr>
+                    <td><code>~/.openclaw/workspace/skills/</code></td>
+                    <td>已安装技能目录</td>
+                </tr>
+                <tr>
+                    <td><code>~/.openclaw/config.json</code></td>
+                    <td>主配置文件</td>
+                </tr>
+                <tr>
+                    <td><code>~/.openclaw/gateway.json</code></td>
+                    <td>Gateway 配置文件</td>
+                </tr>
+            </tbody>
+        </table>
         
         <h2>💾 备份与恢复</h2>
         
-        <h3>备份工作空间</h3>
-        <div class="code-block"><code># 手动备份
+        <h3>手动备份</h3>
+        <div class="code-block"><code><span class="code-comment"># 备份整个工作空间</span>
 tar -czf openclaw-backup-$(date +%Y%m%d).tar.gz ~/.openclaw/workspace
 
-# 自动备份（添加到 crontab）
+<span class="code-comment"># 备份到指定目录</span>
+tar -czf ~/backups/openclaw-$(date +%Y%m%d).tar.gz ~/.openclaw/workspace</code></div>
+        
+        <h3>自动备份（推荐）</h3>
+        <div class="code-block"><code><span class="code-comment"># 添加到 crontab（每天凌晨 2 点自动备份）</span>
+crontab -e
+
+<span class="code-comment"># 添加以下行：</span>
 0 2 * * * tar -czf ~/backups/openclaw-$(date +\%Y\%m\%d).tar.gz ~/.openclaw/workspace</code></div>
         
-        <h3>恢复工作空间</h3>
-        <div class="code-block"><code># 解压备份
+        <h3>恢复备份</h3>
+        <div class="code-block"><code><span class="code-comment"># 解压备份文件</span>
 tar -xzf openclaw-backup-20260311.tar.gz -C ~/
 
-# 重启 Gateway
+<span class="code-comment"># 重启 Gateway</span>
 openclaw gateway restart</code></div>
         
         <h2>🐛 常见问题</h2>
         
         <h3>Q: 安装失败，提示权限错误？</h3>
-        <div class="code-block"><code># 使用 sudo 安装
+        <div class="code-block"><code><span class="code-comment"># 方案 1：使用 sudo</span>
 sudo npm install -g openclaw
 
-# 或者修改 npm 全局目录
+<span class="code-comment"># 方案 2：修改 npm 全局目录（推荐）</span>
 mkdir ~/.npm-global
 npm config set prefix '~/.npm-global'
 echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc</code></div>
+source ~/.bashrc
+npm install -g openclaw</code></div>
         
         <h3>Q: Gateway 启动失败？</h3>
-        <div class="code-block"><code># 查看详细日志
+        <div class="code-block"><code><span class="code-comment"># 查看详细日志</span>
 openclaw gateway logs --tail 100
 
-# 检查端口占用
+<span class="code-comment"># 检查端口占用</span>
 lsof -i :18789
 
-# 修改端口
-nano ~/.openclaw/gateway.json</code></div>
+<span class="code-comment"># 如果端口被占用，修改配置</span>
+nano ~/.openclaw/gateway.json
+<span class="code-comment"># 修改 "port": 18789 为其他端口</span></code></div>
         
         <h3>Q: 如何更新 OpenClaw？</h3>
-        <div class="code-block"><code># 更新到最新版本
+        <div class="code-block"><code><span class="code-comment"># 更新 OpenClaw 本体</span>
 npm update -g openclaw
 
-# 更新技能
-clawhub update --all</code></div>
+<span class="code-comment"># 更新所有技能</span>
+clawhub update --all
+
+<span class="code-comment"># 重启 Gateway</span>
+openclaw gateway restart</code></div>
         
-        <h2>📚 更多资源</h2>
+        <h3>Q: 忘记 API Key 怎么办？</h3>
+        <div class="code-block"><code><span class="code-comment"># 查看当前配置</span>
+cat ~/.openclaw/config.json
+
+<span class="code-comment"># 重新编辑配置</span>
+nano ~/.openclaw/config.json</code></div>
+        
+        <h2>📖 更多资源</h2>
         <ul>
-            <li><a href="https://docs.openclaw.ai" target="_blank">官方文档</a></li>
-            <li><a href="https://github.com/openclaw/openclaw" target="_blank">GitHub 仓库</a></li>
-            <li><a href="https://clawhub.com" target="_blank">ClawHub 技能市场</a></li>
-            <li><a href="https://discord.com/invite/clawd" target="_blank">Discord 社区</a></li>
+            <li>📚 <a href="https://docs.openclaw.ai" target="_blank">官方文档</a> - 完整的使用指南</li>
+            <li>💻 <a href="https://github.com/openclaw/openclaw" target="_blank">GitHub 仓库</a> - 源代码和问题追踪</li>
+            <li>🎯 <a href="https://clawhub.com" target="_blank">ClawHub</a> - 技能市场</li>
+            <li>💬 <a href="https://discord.com/invite/clawd" target="_blank">Discord 社区</a> - 获取帮助和交流</li>
         </ul>
         
-        <div class="success">
-            <strong>🎉 恭喜！</strong> 你已经完成了 OpenClaw 的安装和配置。现在可以开始使用你的 AI 助手了！
+        <div class="success" style="margin-top: 40px;">
+            <strong>🎉 恭喜完成安装！</strong><br>
+            你已经成功部署了 OpenClaw。现在可以开始使用你的专属 AI 助手了！<br>
+            <br>
+            <strong>下一步：</strong>
+            <ul style="margin-top: 10px;">
+                <li>在 Telegram 中和你的 bot 对话</li>
+                <li>安装更多技能扩展功能</li>
+                <li>定期备份你的工作空间</li>
+                <li>加入社区获取更多玩法</li>
+            </ul>
         </div>
     </div>
     
     <div class="footer">
-        <p>© 2026 西门吹雪 | 由 OpenClaw 自动生成</p>
-        <p><a href="index.html">返回首页</a></p>
+        <p style="font-size: 1.2em; margin-bottom: 15px;">© 2026 西门吹雪 | 由 OpenClaw 自动生成</p>
+        <div>
+            <a href="index.html">🏠 返回首页</a>
+            <a href="https://github.com/ximenchuixue77" target="_blank">💻 GitHub</a>
+            <a href="https://docs.openclaw.ai" target="_blank">📚 官方文档</a>
+        </div>
     </div>
 </body>
 </html>
