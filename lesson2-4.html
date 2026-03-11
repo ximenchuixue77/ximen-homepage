@@ -181,6 +181,7 @@
             padding: 40px 60px;
             flex: 1;
             max-width: 1200px;
+            min-height: calc(100vh - 230px);
         }
         
         .content-header {
@@ -291,11 +292,11 @@
             </div>
             
             <div class="sidebar-section">
-                <div class="sidebar-title" onclick="toggleMenu('lesson2')">
+                <div class="sidebar-title expanded" onclick="toggleMenu('lesson2')">
                     <span>🐛 第二课：问题</span>
                     <span class="arrow">▶</span>
                 </div>
-                <ul class="sidebar-menu" id="lesson2">
+                <ul class="sidebar-menu show" id="lesson2">
                     <li><a href="lesson2-1.html"><span class="icon">🔑</span>2.1 权限问题</a></li>
                     <li><a href="lesson2-2.html"><span class="icon">🚪</span>2.2 端口占用</a></li>
                     <li><a href="#"><span class="icon">🔐</span>2.3 API Key 问题（待添加）</a></li>
