@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.1 使用心得 - 自动化录单系统 | OpenClaw 教程</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background: #f5f7fa;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+        
+        @keyframes shine {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+        
+        .header h1 span {
+            margin-left: 15px;
+            font-size: 0.5em;
+            background: linear-gradient(90deg, #fff 0%, #ffd700 50%, #fff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shine 3s linear infinite;
+        }
+        
+        .layout {
+            display: flex;
+            margin-top: 90px;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 90px;
+            bottom: 0;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-title {
+            padding: 15px 25px;
+            font-weight: bold;
+            color: #667eea;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        
+        .sidebar-title:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        .sidebar-title.expanded .arrow {
+            transform: rotate(90deg);
+        }
+        
+        .arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.8em;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-menu.show {
+            max-height: 1000px;
+        }
+        
+        .sidebar-menu a {
+            display: block;
+            padding: 10px 25px 10px 40px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+        
+        .sidebar-menu a:hover {
+            background: linear-gradient(90deg, rgba(102,126,234,0.05) 0%, transparent 100%);
+            border-left-color: #667eea;
+            color: #667eea;
+        }
+        
+        .sidebar-menu a.active {
+            background: linear-gradient(90deg, rgba(102,126,234,0.1) 0%, transparent 100%);
+            color: #667eea;
+            border-left-color: #667eea;
+            font-weight: bold;
+            pointer-events: auto;
+        }
+        
+        .icon {
+            margin-right: 8px;
+        }
+        
+        .content {
+            margin-left: 280px;
+            padding: 40px 60px;
+            flex: 1;
+            max-width: 1200px;
+            min-height: 100vh;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.3em;
+        }
+        
+        p {
+            margin: 15px 0;
+            color: #555;
+        }
+        
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+        
+        li {
+            margin: 8px 0;
+            color: #555;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            background: white;
+            margin-top: 50px;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📚 OpenClaw 完整教程 <span>西门吹雪&掠夺者引擎强力制作</span></h1>
+    </div>
+    
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title expanded" onclick="toggleMenu('lesson1')">
+                    <span>📚 第一课：安装</span>
+                    <span class="arrow">▶</span>
+                </div>
+                <ul class="sidebar-menu show" id="lesson1">
+                    <li><a href="lesson1-1.html"><span class="icon">📦</span>1.1 环境准备</a></li>
+                    <li><a href="lesson1-2.html"><span class="icon">🔧</span>1.2 安装 OpenClaw</a></li>
+                    <li><a href="lesson1-3.html"><span class="icon">⚙️</span>1.3 初始化配置</a></li>
+                    <li><a href="lesson1-4.html"><span class="icon">🎯</span>1.4 安装技能</a></li>
+                    <li><a href="lesson1-5.html"><span class="icon">📱</span>1.5 连接软件</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title" onclick="toggleMenu('lesson2')">
+                    <span>🐛 第二课：问题</span>
+                    <span class="arrow">▶</span>
+                </div>
+                <ul class="sidebar-menu" id="lesson2">
+                    <li><a href="lesson2-1.html"><span class="icon">🔑</span>2.1 权限问题</a></li>
+                    <li><a href="lesson2-2.html"><span class="icon">🚪</span>2.2 端口占用</a></li>
+                    <li><a href="#"><span class="icon">🔐</span>2.3 API Key 问题（待添加）</a></li>
+                    <li><a href="lesson2-4.html"><span class="icon">🤖</span>2.4 Telegram 问题</a></li>
+                    <li><a href="#"><span class="icon">❓</span>2.5 其他问题（待添加）</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title" onclick="toggleMenu('lesson3')">
+                    <span>💡 第三课：实践</span>
+                    <span class="arrow">▶</span>
+                </div>
+                <ul class="sidebar-menu" id="lesson3">
+                    <li><a href="lesson3-1.html" class="active"><span class="icon">✨</span>3.1 使用心得</a></li>
+                    <li><a href="#"><span class="icon">🎨</span>3.2 创意玩法（待添加）</a></li>
+                    <li><a href="#"><span class="icon">🚀</span>3.3 进阶技巧（待添加）</a></li>
+                </ul>
+            </div>
+        </aside>
+        
+        <main class="content">
+            <h2>3.1 使用心得 - 自动化录单系统</h2>
+            <p>使用 OpenClaw + Playwright 实现网页自动化录单的完整流程</p>
+            
+            <div class="card">
+                <h3>🎯 项目背景</h3>
+                <p>需要在螳螂营销云系统中批量录入学员信息，手动操作效率低且容易出错。通过 OpenClaw 的 Playwright 技能实现自动化录单。</p>
+                
+                <p><strong>目标网站：</strong>https://yixue.n5.bjmantis.cn/</p>
+                <p><strong>核心功能：</strong>自动登录 → 导航到报名页面 → 填写学员信息 → 提交</p>
+            </div>
+            
+            <div class="card">
+                <h3>📋 完整流程</h3>
+                
+                <h4 style="color: #667eea; margin-top: 20px;">步骤 1：安装 Playwright 技能</h4>
+                <pre><code># 使用 ClawHub 安装
+clawhub install playwright</code></pre>
+                
+                <h4 style="color: #667eea; margin-top: 20px;">步骤 2：创建项目结构</h4>
+                <pre><code>workspace/
+├── ludan/              # 录单项目文件夹
+│   ├── minzu.json      # 56个民族数据
+│   ├── diqu.json       # 34个省级行政区数据
+│   └── matcher.js      # 模糊匹配函数
+├── photo/              # 截图存放目录
+└── scripts/            # 自动化脚本</code></pre>
+                
+                <h4 style="color: #667eea; margin-top: 20px;">步骤 3：建立数据库</h4>
+                <p><strong>民族数据（minzu.json）：</strong></p>
+                <ul>
+                    <li>包含 56 个民族完整名称</li>
+                    <li>支持模糊匹配：壮 → 壮族，维吾尔 → 维吾尔族</li>
+                </ul>
+                
+                <p style="margin-top: 15px;"><strong>地区数据（diqu.json）：</strong></p>
+                <ul>
+                    <li>包含 34 个省级行政区</li>
+                    <li>支持模糊匹配：广西 → 广西壮族自治区，内蒙 → 内蒙古自治区</li>
+                </ul>
+                
+                <h4 style="color: #667eea; margin-top: 20px;">步骤 4：编写自动化脚本</h4>
+                <p><strong>核心技术点：</strong></p>
+                <ul>
+                    <li><strong>模拟人类操作：</strong>随机延迟（500-1500ms）+ 慢速输入（delay: 80-120ms）</li>
+                    <li><strong>稳定性优化：</strong>使用 slowMo: 100 减慢操作速度</li>
+                    <li><strong>等待策略：</strong>waitForTimeout 确保页面加载完成</li>
+                    <li><strong>截图调试：</strong>每个关键步骤保存截图到 photo/ 目录</li>
+                </ul>
+                
+                <pre><code>// 随机延迟函数
+const humanDelay = (min = 500, max = 1500) => {
+  return new Promise(resolve => 
+    setTimeout(resolve, Math.random() * (max - min) + min)
+  );
+};
+
+// 登录流程
+await page.click('input[placeholder*="用户名"]');
+await humanDelay(300, 600);
+await page.type('input[placeholder*="用户名"]', 'username', { delay: 100 });
+await page.click('input[type="checkbox"]');  // 勾选协议
+await page.click('button:has-text("登")');</code></pre>
+            </div>
+            
+            <div class="card">
+                <h3>🔍 关键问题与解决方案</h3>
+                
+                <h4 style="color: #764ba2; margin-top: 20px;">问题 1：登录失败</h4>
+                <p><strong>原因：</strong>忘记勾选"我已阅读并同意"复选框</p>
+                <p><strong>解决：</strong>在点击登录前添加 <code>await page.click('input[type="checkbox"]')</code></p>
+                
+                <h4 style="color: #764ba2; margin-top: 20px;">问题 2：找不到按钮</h4>
+                <p><strong>原因：</strong>按钮文字中间有空格（"报 名" 而不是 "报名"）</p>
+                <p><strong>解决：</strong>使用 <code>button:has-text("报 名")</code> 精确匹配</p>
+                
+                <h4 style="color: #764ba2; margin-top: 20px;">问题 3：截图上传慢</h4>
+                <p><strong>原因：</strong>每次都推送到 GitHub Pages，需要等待部署</p>
+                <p><strong>解决：</strong>截图保存到本地 photo/ 目录，直接查看</p>
+            </div>
+            
+            <div class="card">
+                <h3>💡 最佳实践</h3>
+                
+                <h4 style="color: #667eea; margin-top: 20px;">1. 项目组织</h4>
+                <ul>
+                    <li><strong>ludan/</strong> - 业务数据和匹配逻辑</li>
+                    <li><strong>photo/</strong> - 调试截图（不提交到 Git）</li>
+                    <li><strong>scripts/</strong> - 自动化脚本</li>
+                </ul>
+                
+                <h4 style="color: #667eea; margin-top: 20px;">2. 模拟人类操作</h4>
+                <ul>
+                    <li>随机延迟：避免被识别为机器人</li>
+                    <li>慢速输入：每个字符间隔 80-120ms</li>
+                    <li>点击前等待：humanDelay(300, 600)</li>
+                </ul>
+                
+                <h4 style="color: #667eea; margin-top: 20px;">3. 调试技巧</h4>
+                <ul>
+                    <li>每个关键步骤截图：方便定位问题</li>
+                    <li>打印页面文本：检查是否加载成功</li>
+                    <li>查找所有按钮：<code>page.$$eval('button', ...)</code></li>
+                </ul>
+                
+                <h4 style="color: #667eea; margin-top: 20px;">4. 数据管理</h4>
+                <ul>
+                    <li>使用 JSON 存储静态数据（民族、地区）</li>
+                    <li>编写匹配函数支持模糊查询</li>
+                    <li>导出为模块方便复用</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>📊 项目成果</h3>
+                <ul>
+                    <li>✅ 成功实现自动登录（包含协议勾选）</li>
+                    <li>✅ 自动导航到报名页面（现场咨询 → 工作台 → 报名）</li>
+                    <li>✅ 建立民族和地区数据库（支持模糊匹配）</li>
+                    <li>✅ 实现人性化操作（随机延迟 + 慢速输入）</li>
+                    <li>✅ 完善的调试机制（截图 + 日志）</li>
+                </ul>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border-left: 5px solid #28a745; padding: 20px; border-radius: 8px;">
+                <strong>💡 经验总结</strong><br>
+                自动化不是简单的模拟点击，而是要理解业务流程、处理异常情况、优化用户体验。通过 OpenClaw + Playwright，我们可以快速构建稳定可靠的自动化系统。
+            </div>
+            
+            <div class="nav-buttons">
+                <a href="lesson2-4.html" class="nav-button">← 上一节：Telegram 问题</a>
+                <a href="#" class="nav-button">下一节：创意玩法 →</a>
+            </div>
+        </main>
+    </div>
+    
+    <div class="footer">
+        <p>© 2026 西门吹雪 | 由 OpenClaw 自动生成</p>
+    </div>
+    
+    <script>
+        function toggleMenu(id) {
+            const menu = document.getElementById(id);
+            const title = menu.previousElementSibling;
+            
+            if (menu.classList.contains('show')) {
+                menu.classList.remove('show');
+                title.classList.remove('expanded');
+            } else {
+                menu.classList.add('show');
+                title.classList.add('expanded');
+            }
+        }
+    </script>
+</body>
+</html>
