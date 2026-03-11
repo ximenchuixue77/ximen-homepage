@@ -36,6 +36,7 @@
             align-items: center;
         }
         
+        
         @keyframes shine {
             0% {
                 background-position: -200% center;
@@ -80,21 +81,44 @@
         }
         
         .sidebar-section {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         
         .sidebar-title {
-            padding: 0 25px;
-            font-size: 0.85em;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
+            padding: 12px 25px;
+            font-size: 0.9em;
+            color: #333;
             font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-title:hover {
+            background: #f5f7fa;
+            color: #667eea;
+        }
+        
+        .sidebar-title .arrow {
+            transition: transform 0.3s;
+            font-size: 0.8em;
+        }
+        
+        .sidebar-title.expanded .arrow {
+            transform: rotate(90deg);
         }
         
         .sidebar-menu {
             list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .sidebar-menu.show {
+            max-height: 500px;
         }
         
         .sidebar-menu li {
@@ -127,7 +151,31 @@
         }
         
         .sidebar-menu a .icon {
-            margin-right: 10px;
+            margin-right: 8px;
+        }
+        
+        .sidebar-other {
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 20px;
+        }
+        
+        .sidebar-other a {
+            display: block;
+            padding: 10px 25px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+        
+        .sidebar-other a:hover {
+            background: #f5f7fa;
+            color: #667eea;
+        }
+        
+        .sidebar-other a .icon {
+            margin-right: 8px;
         }
         
         .content {
@@ -165,6 +213,19 @@
             color: #667eea;
             margin-bottom: 20px;
             font-size: 1.5em;
+        }
+        
+        .skill-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        
+        .skill-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
         }
         
         .nav-buttons {
@@ -217,17 +278,17 @@
     </div>
     
     <div class="layout">
-                <nav class="sidebar">
+        <nav class="sidebar">
             <div class="sidebar-section">
                 <div class="sidebar-title expanded" onclick="toggleMenu('lesson1')">
                     <span>📚 第一课：安装</span>
                     <span class="arrow">▶</span>
                 </div>
                 <ul class="sidebar-menu show" id="lesson1">
-                    <li><a href="lesson1-1.html" ><span class="icon">📦</span>1.1 环境准备</a></li>
-                    <li><a href="lesson1-2.html" ><span class="icon">🔧</span>1.2 安装 OpenClaw</a></li>
-                    <li><a href="lesson1-3.html" class="active"><span class="icon">⚙️</span>1.3 初始化配置</a></li>
-                    <li><a href="lesson1-4.html"><span class="icon">🎯</span>1.4 安装技能</a></li>
+                    <li><a href="lesson1-1.html"><span class="icon">📦</span>1.1 环境准备</a></li>
+                    <li><a href="lesson1-2.html"><span class="icon">🔧</span>1.2 安装 OpenClaw</a></li>
+                    <li><a href="lesson1-3.html"><span class="icon">⚙️</span>1.3 初始化配置</a></li>
+                    <li><a href="lesson1-3.html" class="active"><span class="icon">🎯</span>1.4 安装技能</a></li>
                     <li><a href="lesson1-5.html"><span class="icon">📱</span>1.5 连接软件</a></li>
                 </ul>
             </div>
@@ -282,6 +343,7 @@
                 <p>创建工作空间并配置 API Key</p>
             </div>
             
+            
             <div class="card">
                 <h3>📁 创建工作空间</h3>
                 <pre style="background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 15px 0;"><code># 初始化 OpenClaw
@@ -331,17 +393,19 @@ openclaw gateway logs -f</code></pre>
                 <strong>✅ 配置完成！</strong><br>
                 Gateway 启动成功后，OpenClaw 就可以正常工作了。
             </div>
+
             
             <div class="nav-buttons">
                 <a href="lesson1-2.html" class="nav-button">← 上一节：安装 OpenClaw</a>
-                <a href="tutorial.html" class="nav-button">返回教程首页 →</a>
+                <a href="lesson1-4.html" class="nav-button">下一节：安装技能 →</a>
             </div>
         </main>
     </div>
     
     <div class="footer">
-        <p>© 2026 西门吹雪 | 由 OpenClaw 自动生成</p>
+        <p>© 2026 西门吹雪&掠夺者引擎强力制作 | 由 OpenClaw 自动生成</p>
     </div>
+    
     <script>
         function toggleMenu(id) {
             const menu = document.getElementById(id);
