@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw 安装教程 | 西门吹雪</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background: #f5f7fa;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: -40px auto 60px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 50px;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95em;
+        }
+        
+        .code-block code {
+            display: block;
+            white-space: pre;
+        }
+        
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        
+        a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚔️ OpenClaw 安装教程</h1>
+        <p>从零开始，打造你的 AI 助手</p>
+    </div>
+    
+    <div class="container">
+        <h2>📋 系统要求</h2>
+        <ul>
+            <li><strong>操作系统：</strong>Linux / macOS / Windows (WSL2)</li>
+            <li><strong>Node.js：</strong>≥ 18.0.0</li>
+            <li><strong>内存：</strong>≥ 2GB</li>
+            <li><strong>硬盘：</strong>≥ 10GB 可用空间</li>
+        </ul>
+        
+        <h2>🚀 快速安装</h2>
+        
+        <h3>1. 安装 Node.js</h3>
+        <div class="code-block"><code># Ubuntu/Debian
+sudo apt update
+sudo apt install nodejs npm -y
+
+# macOS (使用 Homebrew)
+brew install node
+
+# 验证安装
+node --version
+npm --version</code></div>
+        
+        <h3>2. 安装 OpenClaw</h3>
+        <div class="code-block"><code># 全局安装
+npm install -g openclaw
+
+# 验证安装
+openclaw --version</code></div>
+        
+        <div class="success">
+            <strong>✅ 安装成功！</strong> 如果看到版本号，说明 OpenClaw 已经安装完成。
+        </div>
+        
+        <h2>⚙️ 初始化配置</h2>
+        
+        <h3>1. 创建工作空间</h3>
+        <div class="code-block"><code># 初始化 OpenClaw
+openclaw init
+
+# 这会创建以下目录结构：
+# ~/.openclaw/
+# ├── workspace/      # 工作空间
+# ├── config.json     # 配置文件
+# └── gateway.json    # 网关配置</code></div>
+        
+        <h3>2. 配置 API Key</h3>
+        <div class="code-block"><code># 编辑配置文件
+nano ~/.openclaw/config.json
+
+# 添加你的 API Key：
+{
+  "models": {
+    "default": "claude-sonnet-4",
+    "apiKey": "your-api-key-here"
+  }
+}</code></div>
+        
+        <div class="note">
+            <strong>💡 提示：</strong> 你可以使用 Anthropic、OpenAI、或其他兼容的 API。
+        </div>
+        
+        <h3>3. 启动 Gateway</h3>
+        <div class="code-block"><code># 启动 OpenClaw Gateway
+openclaw gateway start
+
+# 查看状态
+openclaw gateway status
+
+# 查看日志
+openclaw gateway logs</code></div>
+        
+        <h2>🔧 安装技能 (Skills)</h2>
+        
+        <h3>1. 安装 ClawHub CLI</h3>
+        <div class="code-block"><code>npm install -g clawhub</code></div>
+        
+        <h3>2. 搜索并安装技能</h3>
+        <div class="code-block"><code># 搜索技能
+clawhub search memory
+
+# 安装技能
+clawhub install memory-master
+
+# 查看已安装技能
+clawhub list</code></div>
+        
+        <h3>3. 推荐技能</h3>
+        <ul>
+            <li><strong>memory-master：</strong>精准记忆系统</li>
+            <li><strong>openclaw-security-scanner：</strong>安全扫描工具</li>
+            <li><strong>weather：</strong>天气查询</li>
+            <li><strong>gog：</strong>Google Workspace 集成</li>
+        </ul>
+        
+        <h2>🔒 安全配置</h2>
+        
+        <div class="warning">
+            <strong>⚠️ 重要：</strong> 安装完成后，务必运行安全扫描！
+        </div>
+        
+        <div class="code-block"><code># 安装安全扫描工具
+clawhub install openclaw-security-scanner
+
+# 运行扫描
+bash ~/.openclaw/workspace/skills/openclaw-security-scanner/oc-security-scan.sh
+
+# 自动修复问题
+bash ~/.openclaw/workspace/skills/openclaw-security-scanner/oc-security-scan.sh --fix</code></div>
+        
+        <h2>📱 连接 Telegram</h2>
+        
+        <h3>1. 创建 Telegram Bot</h3>
+        <ol>
+            <li>在 Telegram 中搜索 <code>@BotFather</code></li>
+            <li>发送 <code>/newbot</code> 创建新 bot</li>
+            <li>按提示设置名称和用户名</li>
+            <li>保存 Bot Token</li>
+        </ol>
+        
+        <h3>2. 配置 OpenClaw</h3>
+        <div class="code-block"><code># 编辑配置
+nano ~/.openclaw/config.json
+
+# 添加 Telegram 配置：
+{
+  "telegram": {
+    "token": "your-bot-token",
+    "allowedUsers": [123456789]
+  }
+}</code></div>
+        
+        <h3>3. 重启 Gateway</h3>
+        <div class="code-block"><code>openclaw gateway restart</code></div>
+        
+        <h2>💾 备份与恢复</h2>
+        
+        <h3>备份工作空间</h3>
+        <div class="code-block"><code># 手动备份
+tar -czf openclaw-backup-$(date +%Y%m%d).tar.gz ~/.openclaw/workspace
+
+# 自动备份（添加到 crontab）
+0 2 * * * tar -czf ~/backups/openclaw-$(date +\%Y\%m\%d).tar.gz ~/.openclaw/workspace</code></div>
+        
+        <h3>恢复工作空间</h3>
+        <div class="code-block"><code># 解压备份
+tar -xzf openclaw-backup-20260311.tar.gz -C ~/
+
+# 重启 Gateway
+openclaw gateway restart</code></div>
+        
+        <h2>🐛 常见问题</h2>
+        
+        <h3>Q: 安装失败，提示权限错误？</h3>
+        <div class="code-block"><code># 使用 sudo 安装
+sudo npm install -g openclaw
+
+# 或者修改 npm 全局目录
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc</code></div>
+        
+        <h3>Q: Gateway 启动失败？</h3>
+        <div class="code-block"><code># 查看详细日志
+openclaw gateway logs --tail 100
+
+# 检查端口占用
+lsof -i :18789
+
+# 修改端口
+nano ~/.openclaw/gateway.json</code></div>
+        
+        <h3>Q: 如何更新 OpenClaw？</h3>
+        <div class="code-block"><code># 更新到最新版本
+npm update -g openclaw
+
+# 更新技能
+clawhub update --all</code></div>
+        
+        <h2>📚 更多资源</h2>
+        <ul>
+            <li><a href="https://docs.openclaw.ai" target="_blank">官方文档</a></li>
+            <li><a href="https://github.com/openclaw/openclaw" target="_blank">GitHub 仓库</a></li>
+            <li><a href="https://clawhub.com" target="_blank">ClawHub 技能市场</a></li>
+            <li><a href="https://discord.com/invite/clawd" target="_blank">Discord 社区</a></li>
+        </ul>
+        
+        <div class="success">
+            <strong>🎉 恭喜！</strong> 你已经完成了 OpenClaw 的安装和配置。现在可以开始使用你的 AI 助手了！
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>© 2026 西门吹雪 | 由 OpenClaw 自动生成</p>
+        <p><a href="index.html">返回首页</a></p>
+    </div>
+</body>
+</html>
