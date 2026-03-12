@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.2 克隆分身 - OpenClaw 教程</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        h2 {
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        h3 {
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        p, li {
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .error {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚔️ 3.2 克隆分身</h1>
+        <p class="subtitle">完整克隆 OpenClaw 记忆，创建你的 AI 分身 | 西门吹雪&掠夺者引擎强力制作</p>
+
+        <div class="success">
+            <strong>🎯 目标：</strong><br>
+            在新机器上创建一个完全继承记忆的 OpenClaw 分身，拥有相同的性格、知识和工作方式。
+        </div>
+
+        <h2>📋 克隆前的准备</h2>
+
+        <h3>1. 确认记忆仓库</h3>
+        <p>首先确认你的记忆已经备份到 GitHub：</p>
+        <pre>cd ~/.openclaw/workspace
+git remote -v</pre>
+        <p>应该看到类似：</p>
+        <pre>origin  https://github.com/你的用户名/openclaw-memory.git (fetch)
+origin  https://github.com/你的用户名/openclaw-memory.git (push)</pre>
+
+        <h3>2. 记忆文件结构</h3>
+        <p>完整的记忆系统包含以下文件：</p>
+        <pre>workspace/
+├── MEMORY.md              # 长期记忆
+├── SOUL.md                # 性格和行为准则
+├── USER.md                # 关于你的信息
+├── AGENTS.md              # 工作规则
+├── TOOLS.md               # 工具配置
+├── IDENTITY.md            # 身份信息
+├── HEARTBEAT.md           # 心跳检测规则
+├── RULES.md               # 自定义规则
+└── memory/
+    ├── YYYY-MM-DD.md      # 每日记录
+    ├── knowledge/         # 知识库
+    ├── projects/          # 项目记录
+    └── conversations/     # 重要对话记录</pre>
+
+        <h2>🚀 完整克隆步骤</h2>
+
+        <div class="step">
+            <h3><span class="step-number">1</span>在新机器上安装 OpenClaw</h3>
+            <pre># 安装 Node.js（如果还没有）
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# 安装 OpenClaw
+npm install -g openclaw
+
+# 验证安装
+openclaw --version</pre>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">2</span>初始化 OpenClaw</h3>
+            <pre># 启动 OpenClaw（会自动创建 workspace）
+openclaw gateway start
+
+# 等待启动完成
+openclaw gateway status</pre>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">3</span>克隆记忆仓库</h3>
+            <pre># 进入 workspace
+cd ~/.openclaw/workspace
+
+# 备份原有文件（如果有）
+mkdir -p backup
+mv MEMORY.md SOUL.md USER.md backup/ 2>/dev/null || true
+
+# 克隆记忆仓库
+git clone https://github.com/你的用户名/openclaw-memory.git temp
+
+# 复制所有文件到 workspace
+cp -r temp/* .
+cp -r temp/.git .
+
+# 删除临时目录
+rm -rf temp
+
+# 验证文件
+ls -la</pre>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">4</span>配置 Git（如果需要推送）</h3>
+            <pre># 配置 Git 用户信息
+git config user.name "你的名字"
+git config user.email "你的邮箱"
+
+# 测试连接
+git remote -v
+git pull origin main</pre>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">5</span>重启 OpenClaw</h3>
+            <pre># 重启以加载新的记忆文件
+openclaw gateway restart
+
+# 等待启动
+sleep 5
+
+# 检查状态
+openclaw gateway status</pre>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">6</span>验证克隆成功</h3>
+            <p>发送第一条消息测试分身是否继承了记忆：</p>
+            <pre># 通过 Telegram 或其他方式发送消息
+"你还记得我们之前做的螳螂营销云项目吗？"
+
+# 如果分身回答正确，说明记忆继承成功！</pre>
+        </div>
+
+        <h2>🔧 一键克隆脚本</h2>
+        <p>为了简化流程，可以使用这个一键脚本：</p>
+        <pre>#!/bin/bash
+
+# OpenClaw 分身克隆脚本
+# 使用方法：bash clone-openclaw.sh https://github.com/你的用户名/openclaw-memory.git
+
+REPO_URL=$1
+
+if [ -z "$REPO_URL" ]; then
+    echo "❌ 错误：请提供记忆仓库 URL"
+    echo "使用方法：bash clone-openclaw.sh https://github.com/你的用户名/openclaw-memory.git"
+    exit 1
+fi
+
+echo "🚀 开始克隆 OpenClaw 分身..."
+
+# 1. 检查 OpenClaw 是否已安装
+if ! command -v openclaw &> /dev/null; then
+    echo "📦 安装 OpenClaw..."
+    npm install -g openclaw
+fi
+
+# 2. 启动 OpenClaw
+echo "🔧 启动 OpenClaw..."
+openclaw gateway start
+sleep 5
+
+# 3. 进入 workspace
+cd ~/.openclaw/workspace
+
+# 4. 备份原有文件
+echo "💾 备份原有文件..."
+mkdir -p backup
+mv MEMORY.md SOUL.md USER.md AGENTS.md backup/ 2>/dev/null || true
+
+# 5. 克隆记忆仓库
+echo "📥 克隆记忆仓库..."
+git clone "$REPO_URL" temp
+
+# 6. 复制文件
+echo "📋 复制记忆文件..."
+cp -r temp/* .
+cp -r temp/.git .
+rm -rf temp
+
+# 7. 重启 OpenClaw
+echo "🔄 重启 OpenClaw..."
+openclaw gateway restart
+sleep 5
+
+# 8. 验证
+echo ""
+echo "✅ 克隆完成！"
+echo ""
+echo "📊 记忆文件："
+ls -lh MEMORY.md SOUL.md USER.md AGENTS.md 2>/dev/null
+echo ""
+echo "📁 记忆目录："
+ls -lh memory/
+echo ""
+echo "🎯 下一步："
+echo "1. 发送消息测试分身是否继承了记忆"
+echo "2. 如果需要推送更新，配置 Git："
+echo "   git config user.name '你的名字'"
+echo "   git config user.email '你的邮箱'"
+</pre>
+
+        <div class="success">
+            <strong>💡 使用方法：</strong>
+            <pre>bash clone-openclaw.sh https://github.com/你的用户名/openclaw-memory.git</pre>
+        </div>
+
+        <h2>❌ 常见错误与解决方案</h2>
+
+        <h3>错误 1：克隆后分身没有记忆</h3>
+        <div class="error">
+            <strong>现象：</strong>分身回答"我不记得"或"我没有这方面的信息"
+        </div>
+        <div class="success">
+            <strong>✅ 解决方案：</strong>
+            <pre># 1. 检查文件是否存在
+cd ~/.openclaw/workspace
+ls -lh MEMORY.md SOUL.md USER.md
+
+# 2. 检查文件内容
+cat MEMORY.md | head -20
+
+# 3. 检查 AGENTS.md 是否正确
+grep "MEMORY.md" AGENTS.md
+
+# 4. 重启 OpenClaw
+openclaw gateway restart
+
+# 5. 清除缓存（如果需要）
+rm -rf ~/.openclaw/cache/*
+openclaw gateway restart</pre>
+        </div>
+
+        <h3>错误 2：Git 克隆失败</h3>
+        <div class="error">
+            <strong>现象：</strong><code>fatal: could not read Username</code> 或 <code>Permission denied</code>
+        </div>
+        <div class="success">
+            <strong>✅ 解决方案：</strong>
+            <pre># 方案 1：使用 HTTPS + Token
+git clone https://你的token@github.com/你的用户名/openclaw-memory.git
+
+# 方案 2：使用 SSH
+git clone git@github.com:你的用户名/openclaw-memory.git
+
+# 方案 3：手动下载
+wget https://github.com/你的用户名/openclaw-memory/archive/refs/heads/main.zip
+unzip main.zip
+cp -r openclaw-memory-main/* ~/.openclaw/workspace/</pre>
+        </div>
+
+        <h3>错误 3：文件权限问题</h3>
+        <div class="error">
+            <strong>现象：</strong><code>Permission denied</code> 或无法读取文件
+        </div>
+        <div class="success">
+            <strong>✅ 解决方案：</strong>
+            <pre># 修复文件权限
+cd ~/.openclaw/workspace
+chmod 644 *.md
+chmod 755 memory/
+chmod 644 memory/*.md
+chmod 755 scripts/
+chmod 755 scripts/*.sh</pre>
+        </div>
+
+        <h3>错误 4：记忆文件格式错误</h3>
+        <div class="error">
+            <strong>现象：</strong>OpenClaw 启动失败或报错
+        </div>
+        <div class="success">
+            <strong>✅ 解决方案：</strong>
+            <pre># 检查文件编码
+file MEMORY.md SOUL.md USER.md
+
+# 应该显示：UTF-8 Unicode text
+# 如果不是，转换编码：
+iconv -f GBK -t UTF-8 MEMORY.md > MEMORY.md.new
+mv MEMORY.md.new MEMORY.md
+
+# 检查文件是否有语法错误
+cat MEMORY.md | grep -E "^#|^-|^[0-9]"</pre>
+        </div>
+
+        <h3>错误 5：分身性格不对</h3>
+        <div class="error">
+            <strong>现象：</strong>分身的回答风格和原来不一样
+        </div>
+        <div class="success">
+            <strong>✅ 解决方案：</strong>
+            <pre># 1. 检查 SOUL.md 是否正确
+cat SOUL.md
+
+# 2. 检查 IDENTITY.md
+cat IDENTITY.md
+
+# 3. 确认 AGENTS.md 中的启动流程
+grep -A 10 "启动流程" AGENTS.md
+
+# 4. 重新克隆（如果文件损坏）
+cd ~/.openclaw/workspace
+rm -rf *
+git clone https://github.com/你的用户名/openclaw-memory.git .
+openclaw gateway restart</pre>
+        </div>
+
+        <h2>🔄 保持分身同步</h2>
+
+        <h3>方案 1：手动同步</h3>
+        <pre># 在原机器上推送更新
+cd ~/.openclaw/workspace
+git add .
+git commit -m "更新记忆 $(date +%Y-%m-%d)"
+git push
+
+# 在分身机器上拉取更新
+cd ~/.openclaw/workspace
+git pull origin main
+openclaw gateway restart</pre>
+
+        <h3>方案 2：自动同步（推荐）</h3>
+        <p>在分身机器上设置定时拉取：</p>
+        <pre># 创建同步脚本
+cat > ~/.openclaw/workspace/scripts/sync-memory.sh << 'EOF'
+#!/bin/bash
+cd ~/.openclaw/workspace
+git pull origin main
+if [ $? -eq 0 ]; then
+    echo "✅ 记忆同步成功"
+    openclaw gateway restart
+else
+    echo "❌ 记忆同步失败"
+fi
+EOF
+
+chmod +x ~/.openclaw/workspace/scripts/sync-memory.sh
+
+# 设置 cron（每小时同步一次）
+crontab -e
+# 添加：
+0 * * * * bash ~/.openclaw/workspace/scripts/sync-memory.sh >> ~/.openclaw/sync.log 2>&1</pre>
+
+        <h2>✅ 验证克隆成功的标准</h2>
+
+        <div class="info">
+            <strong>🎯 完美克隆的标志：</strong>
+            <ol>
+                <li>分身能回忆起之前的项目和对话</li>
+                <li>分身的性格和说话风格一致</li>
+                <li>分身知道你的偏好和习惯</li>
+                <li>分身能继续未完成的工作</li>
+                <li>分身使用相同的工具和配置</li>
+            </ol>
+        </div>
+
+        <h3>测试问题清单</h3>
+        <pre># 测试记忆
+"你还记得我们做过什么项目吗？"
+"螳螂营销云录单系统进展如何？"
+"OpenClaw 教程网站的地址是什么？"
+
+# 测试性格
+"你是谁？"
+"你怎么称呼我？"
+"你的工作风格是什么？"
+
+# 测试知识
+"如何修复菜单高亮问题？"
+"商品勾选的选择器是什么？"
+"记忆备份的 cron 时间是？"</pre>
+
+        <h2>🎯 高级技巧</h2>
+
+        <h3>1. 多机器同步</h3>
+        <p>如果你有多台机器，可以让它们共享同一个记忆仓库：</p>
+        <pre># 机器 A（主机）
+cd ~/.openclaw/workspace
+git push origin main
+
+# 机器 B（分身 1）
+cd ~/.openclaw/workspace
+git pull origin main
+
+# 机器 C（分身 2）
+cd ~/.openclaw/workspace
+git pull origin main</pre>
+
+        <h3>2. 分支管理</h3>
+        <p>为不同的分身创建不同的分支：</p>
+        <pre># 创建分身专用分支
+git checkout -b clone-1
+git push origin clone-1
+
+# 在分身机器上
+git clone -b clone-1 https://github.com/你的用户名/openclaw-memory.git</pre>
+
+        <h3>3. 选择性克隆</h3>
+        <p>如果只想克隆部分记忆：</p>
+        <pre># 只克隆知识库
+git clone --depth 1 --filter=blob:none --sparse https://github.com/你的用户名/openclaw-memory.git
+cd openclaw-memory
+git sparse-checkout set memory/knowledge/
+
+# 只克隆项目记录
+git sparse-checkout set memory/projects/</pre>
+
+        <div class="warning">
+            <strong>⚠️ 注意事项：</strong>
+            <ul>
+                <li>克隆前确保原机器的记忆已经推送到 GitHub</li>
+                <li>分身机器需要配置相同的 API Keys 和 Tokens</li>
+                <li>如果使用 Telegram，需要重新连接 Bot</li>
+                <li>定期同步记忆，避免分身和原机器记忆不一致</li>
+                <li>敏感信息（密码、Token）不要提交到 GitHub</li>
+            </ul>
+        </div>
+
+        <h2>📚 相关资源</h2>
+        <ul>
+            <li><a href="https://github.com/ximenchuixue77/openclaw-memory">记忆仓库示例</a></li>
+            <li><a href="lesson-3-1.html">3.1 螳螂营销云自动录单开发</a></li>
+            <li><a href="https://docs.openclaw.ai">OpenClaw 官方文档</a></li>
+        </ul>
+
+        <div class="success">
+            <strong>🎉 恭喜！</strong><br>
+            现在你已经掌握了如何克隆 OpenClaw 分身。无论在哪台机器上，你的 AI 助手都能完整继承记忆，继续为你服务！
+        </div>
+
+        <a href="tutorial.html" class="back-link">← 返回教程目录</a>
+    </div>
+</body>
+</html>
