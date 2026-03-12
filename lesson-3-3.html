@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.3 螳螂营销云录单系统 - 标准操作手册</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 { color: #667eea; margin-bottom: 10px; font-size: 2.5em; }
+        .subtitle { color: #666; margin-bottom: 30px; font-size: 1.1em; }
+        h2 { color: #764ba2; margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #667eea; }
+        h3 { color: #667eea; margin-top: 30px; margin-bottom: 15px; }
+        h4 { color: #555; margin-top: 20px; margin-bottom: 10px; }
+        p, li { line-height: 1.8; color: #333; margin-bottom: 15px; }
+        ul, ol { margin-left: 30px; margin-bottom: 20px; }
+        code { background: #f4f4f4; padding: 2px 8px; border-radius: 4px; font-family: 'Courier New', monospace; color: #e83e8c; }
+        pre { background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 10px; overflow-x: auto; margin: 20px 0; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .error { background: #f8d7da; border-left: 4px solid #dc3545; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .success { background: #d4edda; border-left: 4px solid #28a745; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .info { background: #d1ecf1; border-left: 4px solid #17a2b8; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .step { background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #667eea; }
+        .field { background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 5px; margin: 10px 0; }
+        .field-name { font-weight: bold; color: #667eea; margin-bottom: 5px; }
+        .field-type { color: #999; font-size: 0.9em; margin-bottom: 5px; }
+        .field-selector { background: #f4f4f4; padding: 5px 10px; border-radius: 3px; font-family: monospace; font-size: 0.9em; }
+        .back-link { display: inline-block; margin-top: 40px; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 25px; transition: all 0.3s; }
+        .back-link:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #667eea; color: white; }
+        tr:hover { background: #f5f5f5; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚔️ 3.3 螳螂营销云录单系统 - 标准操作手册</h1>
+        <p class="subtitle">所有录单操作必须严格按照此步骤执行 | 西门吹雪&掠夺者引擎强力制作</p>
+
+        <div class="error">
+            <strong>⚠️ 重要：</strong>此文档是录单系统的标准操作手册，所有录单操作必须严格按照此步骤执行。不要重复之前的错误！
+        </div>
+
+        <h2>📋 登录信息</h2>
+        <table>
+            <tr><th>项目</th><th>值</th></tr>
+            <tr><td>URL</td><td>https://yixue.n5.bjmantis.cn/</td></tr>
+            <tr><td>用户名</td><td>xs-ludanbot</td></tr>
+            <tr><td>密码</td><td>o7TlgmdEiR</td></tr>
+        </table>
+
+        <h2>🔄 完整流程概览</h2>
+        <ol>
+            <li>登录系统</li>
+            <li>导航到报名页面（现场咨询 → 工作台 → 报名）</li>
+            <li>触发完整表单（输入电话号码）</li>
+            <li>填写学员信息（第一步，15个字段）</li>
+            <li>点击"下一步"进入第二步</li>
+            <li>添加商品（增加商品 → 输入名称 → 勾选 → 确定）</li>
+            <li>填写校区和考期（第二步）</li>
+            <li>点击"下一步"进入第三步</li>
+            <li>提交录单（第三步）</li>
+        </ol>
+
+        <h2>📝 详细步骤</h2>
+
+        <div class="step">
+            <h3>步骤 1：登录系统</h3>
+            <p><strong>操作：</strong>访问登录页面并登录</p>
+            
+            <div class="field">
+                <div class="field-name">用户名输入框</div>
+                <div class="field-type">输入方式：直接输入（fill）</div>
+                <div class="field-selector">input[placeholder*="用户名"]</div>
+            </div>
+
+            <div class="field">
+                <div class="field-name">密码输入框</div>
+                <div class="field-type">输入方式：直接输入（fill）</div>
+                <div class="field-selector">input[type="password"]</div>
+            </div>
+
+            <div class="field">
+                <div class="field-name">记住密码复选框</div>
+                <div class="field-type">输入方式：点击（click）</div>
+                <div class="field-selector">input[type="checkbox"]</div>
+            </div>
+
+            <div class="field">
+                <div class="field-name">登录按钮</div>
+                <div class="field-type">输入方式：点击（click）</div>
+                <div class="field-selector">button:has-text("登")</div>
+            </div>
+
+            <pre>await page.goto('https://yixue.n5.bjmantis.cn/');
+await page.waitForTimeout(2000);
+await page.fill('input[placeholder*="用户名"]', 'xs-ludanbot');
+await page.fill('input[type="password"]', 'o7TlgmdEiR');
+await page.click('input[type="checkbox"]');
+await page.click('button:has-text("登")');
+await page.waitForTimeout(5000);</pre>
+
+            <div class="success">
+                <strong>✅ 验证：</strong>登录后 URL 变为 <code>https://yixue.n5.bjmantis.cn/mantis</code>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>步骤 2：导航到报名页面</h3>
+            <p><strong>操作：</strong>点击"现场咨询" → "工作台" → "报名"</p>
+            
+            <table>
+                <tr><th>按钮</th><th>选择器</th><th>等待时间</th></tr>
+                <tr><td>现场咨询</td><td><code>text=现场咨询</code></td><td>3秒</td></tr>
+                <tr><td>工作台</td><td><code>text=工作台</code></td><td>3秒</td></tr>
+                <tr><td>报名</td><td><code>text=报名</code></td><td>3秒</td></tr>
+            </table>
+
+            <pre>await page.click('text=现场咨询');
+await page.waitForTimeout(3000);
+await page.click('text=工作台');
+await page.waitForTimeout(3000);
+await page.click('text=报名');
+await page.waitForTimeout(3000);</pre>
+
+            <div class="success">
+                <strong>✅ 验证：</strong>到达报名页面，能看到电话号码输入框
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>步骤 3：触发完整表单</h3>
+            <p><strong>操作：</strong>输入电话号码并点击"报名"</p>
+            
+            <div class="field">
+                <div class="field-name">电话号码输入框</div>
+                <div class="field-type">输入方式：慢速输入（type, delay: 120ms）</div>
+                <div class="field-selector">input[placeholder="请输入电话号码"]</div>
+            </div>
+
+            <div class="field">
+                <div class="field-name">报名按钮</div>
+                <div class="field-type">输入方式：点击（click）</div>
+                <div class="field-selector">button:has-text("报 名")</div>
+            </div>
+
+            <pre>await page.click('input[placeholder="请输入电话号码"]');
+await page.type('input[placeholder="请输入电话号码"]', '13900000004', { delay: 120 });
+await page.waitForTimeout(1000);
+await page.click('button:has-text("报 名")');
+await page.waitForTimeout(3000);</pre>
+
+            <div class="warning">
+                <strong>⚠️ 注意：</strong>电话号码必须是全新的，否则后续电话1字段会为空！
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>步骤 4：填写学员信息（第一步）</h3>
+            <p><strong>共15个字段，包含直接输入、下拉选择、单选按钮三种类型</strong></p>
+
+            <h4>4.1 姓名</h4>
+            <div class="field">
+                <div class="field-type">输入方式：直接输入（先清空，再type）</div>
+                <div class="field-selector">input[placeholder*="姓名"]</div>
+                <pre>await page.click('input[placeholder*="姓名"]');
+await page.fill('input[placeholder*="姓名"]', '');  // 先清空
+await page.type('input[placeholder*="姓名"]', '秦先生', { delay: 100 });</pre>
+            </div>
+
+            <h4>4.2 性别</h4>
+            <div class="field">
+                <div class="field-type">输入方式：单选按钮（click）</div>
+                <div class="field-selector">女：input[value="女"], label:has-text("女")<br>男：input[value="男"], label:has-text("男")</div>
+                <pre>if (性别 === '女') {
+  await page.click('input[value="女"], label:has-text("女")');
+} else {
+  await page.click('input[value="男"], label:has-text("男")');
+}</pre>
+            </div>
+
+            <h4>4.3 民族</h4>
+            <div class="field">
+                <div class="field-type">输入方式：直接输入（先模糊匹配，再填写）</div>
+                <div class="field-selector">通过 label 查找</div>
+                <div class="warning">
+                    <strong>⚠️ 注意：</strong>需要先模糊匹配（壮 → 壮族），然后填写完整名称
+                </div>
+            </div>
+
+            <h4>4.4 电话1</h4>
+            <div class="field">
+                <div class="field-type">输入方式：自动填入（仅验证）</div>
+                <div class="field-selector">#phone1</div>
+                <pre>const phone1Value = await page.$eval('#phone1', el => el.value);
+if (phone1Value.length !== 11) {
+  throw new Error('电话1 必须是 11 位');
+}</pre>
+                <div class="warning">
+                    <strong>⚠️ 注意：</strong>此字段由步骤3自动填入，只需验证。如果为空，说明电话号码已被使用！
+                </div>
+            </div>
+
+            <h4>4.5 上课手机号</h4>
+            <div class="field">
+                <div class="field-type">输入方式：自动填入或手动填写</div>
+                <div class="field-selector">#account</div>
+                <div class="info">
+                    检查是否已填入 → 如果重复则清空重填 → 如果为空则手动填写
+                </div>
+            </div>
+
+            <h4>4.6-4.15 其他字段</h4>
+            <table>
+                <tr><th>字段</th><th>输入方式</th><th>值</th></tr>
+                <tr><td>地域</td><td>下拉选择</td><td>来宾</td></tr>
+                <tr><td>户籍省份</td><td>下拉选择</td><td>广西</td></tr>
+                <tr><td>来源</td><td>下拉选择</td><td>其他</td></tr>
+                <tr><td>证件类型</td><td>下拉选择</td><td>身份证</td></tr>
+                <tr><td>证件号码</td><td>直接输入</td><td>452226199301012752（18位）</td></tr>
+                <tr><td>前置学历专业</td><td>直接输入</td><td>大专</td></tr>
+                <tr><td>咨询项目</td><td>下拉选择</td><td>自考</td></tr>
+                <tr><td>接待方式</td><td>下拉选择</td><td>直接录单</td></tr>
+                <tr><td>是否分期</td><td>下拉选择</td><td>是</td></tr>
+                <tr><td>职业</td><td>下拉选择</td><td>在校学生</td></tr>
+            </table>
+
+            <div class="info">
+                <strong>💡 下拉选择统一流程：</strong>
+                <ol>
+                    <li>通过 label 查找字段</li>
+                    <li>点击输入框</li>
+                    <li>输入文字（delay: 100ms）</li>
+                    <li>等待3秒（下拉选项出现）</li>
+                    <li>点击第一个选项</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>步骤 5：点击"下一步"进入第二步</h3>
+            <div class="field">
+                <div class="field-type">输入方式：点击（click）</div>
+                <div class="field-selector">button:has-text("下一步")</div>
+                <pre>await page.click('button:has-text("下一步")');
+await page.waitForTimeout(3000);</pre>
+            </div>
+            <div class="success">
+                <strong>✅ 验证：</strong>URL 变为 <code>https://yixue.n5.bjmantis.cn/mantis/enroll/null/0/0</code>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>步骤 6：添加商品（第二步）</h3>
+            
+            <h4>6.1 点击"增加商品"</h4>
+            <div class="field">
+                <div class="field-selector">button:has-text("增加商品")</div>
+                <pre>await page.click('button:has-text("增加商品")');
+await page.waitForTimeout(2000);</pre>
+            </div>
+
+            <h4>6.2 输入商品名称</h4>
+            <div class="field">
+                <div class="field-selector">.ant-modal input[placeholder*="商品"]</div>
+                <pre>const productInput = await page.$('.ant-modal input[placeholder*="商品"]');
+await productInput.click();
+await productInput.type('内部员工班(皖教育学本)', { delay: 100 });
+await page.waitForTimeout(2000);</pre>
+            </div>
+
+            <h4>6.3 勾选第一个商品</h4>
+            <div class="field">
+                <div class="field-type">根据价格判断（/\d{3,}/.test(text)），点击第一列复选框</div>
+                <div class="field-selector">td:first-child input[type="checkbox"]</div>
+                <div class="error">
+                    <strong>⚠️ 关键：</strong>必须点击第一列的复选框，不是其他位置！
+                </div>
+            </div>
+
+            <h4>6.4 点击"确定"</h4>
+            <div class="field">
+                <div class="field-type">点击弹窗底部主按钮</div>
+                <div class="field-selector">.ant-modal-footer .ant-btn-primary</div>
+                <pre>await page.click('.ant-modal-footer .ant-btn-primary', { timeout: 10000 });
+await page.waitForTimeout(2000);</pre>
+                <div class="error">
+                    <strong>⚠️ 关键：</strong>
+                    <ul>
+                        <li>必须使用 <code>.ant-modal-footer .ant-btn-primary</code></li>
+                        <li>超时时间必须是 10 秒，不能是 3 秒</li>
+                        <li>这是最准确的选择器，必须优先使用</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>步骤 7：填写校区和考期（第二步）</h3>
+            <div class="warning">
+                <strong>⚠️ 状态：</strong>待完成（字段未找到）
+            </div>
+            <table>
+                <tr><th>字段</th><th>输入方式</th><th>值</th></tr>
+                <tr><td>校区</td><td>下拉选择</td><td>新疆潜能</td></tr>
+                <tr><td>考期</td><td>下拉选择</td><td>2026-04</td></tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h3>步骤 8：点击"下一步"进入第三步</h3>
+            <div class="field">
+                <div class="field-selector">button:has-text("下一步")</div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>步骤 9：提交录单（第三步）</h3>
+            <div class="warning">
+                <strong>⚠️ 状态：</strong>待完成
+            </div>
+        </div>
+
+        <h2>⚠️ 关键注意事项</h2>
+
+        <div class="error">
+            <h3>1. 电话号码</h3>
+            <ul>
+                <li>必须是全新的号码</li>
+                <li>如果号码已使用，电话1字段会为空</li>
+                <li>测试号码范围：13900000001-13900000099</li>
+            </ul>
+        </div>
+
+        <div class="error">
+            <h3>2. 文本输入</h3>
+            <ul>
+                <li>所有文本输入框必须先清空再输入</li>
+                <li>使用 <code>fill('')</code> 清空，然后 <code>type()</code> 输入</li>
+                <li>输入延迟：100ms</li>
+            </ul>
+        </div>
+
+        <div class="error">
+            <h3>3. 下拉选择</h3>
+            <ul>
+                <li>点击输入框 → 输入文字 → 等待3秒 → 点击第一个选项</li>
+                <li>等待时间不能少于3秒</li>
+            </ul>
+        </div>
+
+        <div class="error">
+            <h3>4. 商品勾选</h3>
+            <ul>
+                <li>必须根据价格判断（<code>/\d{3,}/.test(text)</code>）</li>
+                <li>必须点击第一列的复选框（<code>td:first-child input[type="checkbox"]</code>）</li>
+                <li>不能点击其他位置</li>
+            </ul>
+        </div>
+
+        <div class="error">
+            <h3>5. 确定按钮</h3>
+            <ul>
+                <li>选择器：<code>.ant-modal-footer .ant-btn-primary</code></li>
+                <li>超时时间：10秒</li>
+                <li>这是最准确的选择器，必须优先使用</li>
+            </ul>
+        </div>
+
+        <h2>⏱️ 等待时间表</h2>
+        <table>
+            <tr><th>操作</th><th>等待时间</th></tr>
+            <tr><td>登录后</td><td>5秒</td></tr>
+            <tr><td>导航点击</td><td>3秒</td></tr>
+            <tr><td>下拉选择</td><td>3秒</td></tr>
+            <tr><td>商品勾选</td><td>1秒</td></tr>
+            <tr><td>确定按钮</td><td>2秒</td></tr>
+        </table>
+
+        <h2>❌ 常见错误</h2>
+
+        <div class="error">
+            <h3>错误1：账号锁定</h3>
+            <p><strong>错误信息：</strong><code>用户已锁定，请联系管理员重置密码！</code></p>
+            <p><strong>解决方案：</strong>更新密码为 <code>o7TlgmdEiR</code></p>
+        </div>
+
+        <div class="error">
+            <h3>错误2：电话1为空</h3>
+            <p><strong>错误信息：</strong><code>电话1 错误： (长度: 0)</code></p>
+            <p><strong>原因：</strong>使用了已录入的电话号码</p>
+            <p><strong>解决方案：</strong>使用全新的电话号码</p>
+        </div>
+
+        <div class="error">
+            <h3>错误3：找不到确定按钮</h3>
+            <p><strong>错误信息：</strong><code>所有选择器都失败了</code></p>
+            <p><strong>原因：</strong>超时时间太短或选择器不对</p>
+            <p><strong>解决方案：</strong>使用 <code>.ant-modal-footer .ant-btn-primary</code>，超时10秒</p>
+        </div>
+
+        <h2>📁 文件位置</h2>
+        <table>
+            <tr><th>文件</th><th>路径</th></tr>
+            <tr><td>成功脚本</td><td>/home/lueduozhe/.openclaw/workspace/scripts/batch-ludan-success-final.js</td></tr>
+            <tr><td>备份脚本</td><td>/home/lueduozhe/.openclaw/workspace/backups/batch-ludan-20260312-192937.js</td></tr>
+            <tr><td>民族数据</td><td>ludan/minzu.json</td></tr>
+            <tr><td>地区数据</td><td>ludan/diqu.json</td></tr>
+            <tr><td>匹配函数</td><td>ludan/matcher.js</td></tr>
+        </table>
+
+        <div class="success">
+            <strong>✅ 当前状态：</strong>第一步和第二步完成，第三步待完成
+        </div>
+
+        <a href="tutorial.html" class="back-link">← 返回教程目录</a>
+    </div>
+</body>
+</html>
