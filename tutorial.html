@@ -256,7 +256,7 @@
             </div>
         </nav>
         
-        <main class="content">
+        <main class="content" id="mainContent">
             <div class="content-header">
                 <h2>欢迎来到 OpenClaw 教程</h2>
                 <p>从零开始，一步步掌握 OpenClaw</p>
@@ -293,6 +293,43 @@
                 title.classList.add('expanded');
             }
         }
+        
+        // 处理菜单点击，加载内容到右侧
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.sidebar-menu a[href$=".html"]');
+            const mainContent = document.getElementById('mainContent');
+            
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('href');
+                    
+                    // 移除所有 active 类
+                    links.forEach(l => l.classList.remove('active'));
+                    // 添加 active 到当前链接
+                    this.classList.add('active');
+                    
+                    // 加载内容
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(html => {
+                            // 提取 body 内容
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const content = doc.querySelector('.container') || doc.body;
+                            
+                            // 替换内容
+                            mainContent.innerHTML = content.innerHTML;
+                            
+                            // 滚动到顶部
+                            mainContent.scrollTop = 0;
+                        })
+                        .catch(error => {
+                            mainContent.innerHTML = '<div class="card"><h3>❌ 加载失败</h3><p>无法加载内容，请刷新页面重试。</p></div>';
+                        });
+                });
+            });
+        });
     </script>
 </body>
 </html>
